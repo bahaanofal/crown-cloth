@@ -24,7 +24,14 @@
 
 		.option {
 			padding: 10px 15px;
-			cursor: pointer;
+			color: #4A4A4A;
+			
+
+			&:hover {
+				color: #000;
+				transform: scale(1.05);
+				cursor: pointer;
+			}
 		}
 	}
 }
