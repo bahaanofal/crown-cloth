@@ -4,7 +4,6 @@
 	height: 340px;
 	display: flex;
 	flex-direction: column;
-	padding: 20px;
 	border: 1px solid black;
 	background-color: white;
 	top: 90px;
@@ -13,12 +12,24 @@
 
 	.cart-items {
 		height: 240px;
+		width: 100%;
 		display: flex;
 		flex-direction: column;
-		overflow-y: scroll;
+		overflow-x: hidden;
 	}
 
-	button {
-		margin-top: auto;
+	.foot {
+		width: 90%;
+		margin: auto;
+
+		.total-cost {
+			font-size: 22px;
+			font-weight: bold;
+			color: #29303b;
+		}
+
+		button {
+			width: 100%;
+		}
 	}
 }
