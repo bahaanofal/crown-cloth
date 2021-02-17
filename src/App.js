@@ -33,6 +33,9 @@ class App extends Component {
 			}
 
 			setCurrentUser(userAuth); // currentUser = null
+			// addCollectionAndDocuments('collections', collectionsArray.map(({title, items}) => ({title, items})));
+			// collectionsArray هي => selectCollectionsForPreview
+			// مسحتها عشان بستعملها مرة وحدة فقط وبتتخزن البيانات في الداتابيز
 		});
 	}
 
@@ -59,11 +62,11 @@ class App extends Component {
 }
 
 const mapStateToProps = createStructuredSelector({
-	currentUser: selectCurrentUser
+	currentUser: selectCurrentUser,
 });
 
 const mapDispatchToProps = (dispatch) => ({
-	setCurrentUser: (user) => dispatch(setCurrentUser(user))
+	setCurrentUser: (user) => dispatch(setCurrentUser(user)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);

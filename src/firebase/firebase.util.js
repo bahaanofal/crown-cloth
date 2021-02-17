@@ -17,7 +17,8 @@ firebase.initializeApp(config);
 export const createUserProfileDocument = async (userAuth, additionalData) => {
 	if (!userAuth) return;
 
-	const userRef = firestore.doc(`users/${userAuth.uid}`);
+	const userRef = firestore.doc(`users/${userAuth.uid}`); 
+	// userAuth => جايبها من الرياكت اللي جايباها من الداتا بيز
 
 	const snapShot = await userRef.get();
 
@@ -38,6 +39,41 @@ export const createUserProfileDocument = async (userAuth, additionalData) => {
 
 	return userRef;
 };
+
+
+export const addCollectionAndDocuments = async (collectionKey, objectsToAdd) => {
+	const collectionRef = firestore.collection(collectionKey);
+	const batch = firestore.batch();
+	// batch عبارة عن كل المجموعات تاعتنا
+	objectsToAdd.forEach(obj => {
+		const newDocRef = collectionRef.doc();
+		//  عشوائي من الداتابيز نفسها id هيك بضيف لكل عنصر
+		// .doc(obj.title) هيك بضيف لكل عنصر اي دي هو العنوان تاع الكائن
+		batch.set(newDocRef, obj);
+	});
+
+	return await batch.commit();
+	// .commit();  =>  batch بترسل ال 
+}
+
+export const convertCollectionsSnapshotToMap = collectionsSnapshot => {
+	const transformedCollection = collectionsSnapshot.docs.map(docSnapshot => {
+		const { title, items } = docSnapshot.data();
+		return {
+			routeName: encodeURI(title.toLowerCase()),
+			id: docSnapshot.id,
+			title,
+			items
+		};
+	});
+
+	return transformedCollection.reduce((accumulator, collection) => {
+		accumulator[collection.title.toLowerCase()] = collection;
+		return accumulator;
+	}, {})
+}
+
+
 
 export const auth = firebase.auth();
 export const firestore = firebase.firestore();
