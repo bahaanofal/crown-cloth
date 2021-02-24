@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import CustomButton from '../custom-button/custom-button.component';
 import FormInput from '../form-input/form-input.component';
-import { auth, createUserProfileDocument } from '../../firebase/firebase.util';
 import './sign-up.style.scss';
+import { connect } from 'react-redux';
+import { signUpStart } from '../../redux/user/user.actions';
 
 class SignUp extends Component {
 	constructor() {
@@ -17,24 +18,15 @@ class SignUp extends Component {
 
 	handelSubmit = async event => {
 		event.preventDefault();
+		const { signUpStart } = this.props;
 		const { displayName, email, password, confirmPassword } = this.state;
+		
 		if(password !== confirmPassword){
 			alert("passwords don't match")
 			return;
 		}
-		try {
-			const { user } = await auth.createUserWithEmailAndPassword(email, password);
-			await createUserProfileDocument(user, { displayName });
 
-			this.setState({
-				displayName: '',
-				email: '',
-				password: '',
-				confirmPassword: ''
-			})
-		} catch (error) {
-			console.log(error);
-		}
+		signUpStart({ displayName, email, password });
 	};
 
 	handelChange = (event) => {
@@ -53,7 +45,7 @@ class SignUp extends Component {
                     <FormInput 
                         name="displayName" 
                         type="name" 
-                        handelChange={this.handelChange} 
+                        onChange={this.handelChange} 
 						value={displayName} 
 						label='Display Name'
                         required 
@@ -61,7 +53,7 @@ class SignUp extends Component {
                     <FormInput 
                         name="email" 
                         type="email" 
-                        handelChange={this.handelChange} 
+                        onChange={this.handelChange} 
                         value={email}
                         label='Email'
                         required
@@ -69,7 +61,7 @@ class SignUp extends Component {
 					<FormInput
 						name="password"
 						type="password"
-						handelChange={this.handelChange}
+						onChange={this.handelChange}
 						value={password} 
 						label='Password' 
 						required
@@ -77,7 +69,7 @@ class SignUp extends Component {
 					<FormInput
 						name="confirmPassword"
 						type="password"
-						handelChange={this.handelChange}
+						onChange={this.handelChange}
 						value={confirmPassword} 
 						label='Confirm Password' 
 						required
@@ -90,4 +82,8 @@ class SignUp extends Component {
 	}
 }
 
-export default SignUp;
+const mapDispatchToProps = dispatch => ({
+	signUpStart : userCredentials => dispatch(signUpStart(userCredentials))
+})
+
+export default connect(null, mapDispatchToProps)(SignUp);
