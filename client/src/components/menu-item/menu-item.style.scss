@@ -9,7 +9,6 @@
 	margin: 0 7.5px 15px;
 	overflow: hidden;
 	
-
 	&.large {
 		height: 380px;
 	}
@@ -20,6 +19,10 @@
 
 	&:last-child {
 		margin-left: 7.5px;
+	}
+
+	@media screen and (max-width: 800px){
+		height: 200px;
 	}
 
 	&:hover {

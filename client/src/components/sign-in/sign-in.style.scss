@@ -1,5 +1,4 @@
 .sign-in {
-    width: 380px;
     min-width: 320px;
     display: flex;
     flex-direction: column;
@@ -12,5 +11,18 @@
     .buttons {
         display: flex;
         justify-content: space-between;
+    }
+}
+
+@media only screen and (max-width: 900px) {
+    .sign-in {
+        min-width: 360px;
+        margin: 0 auto;
+    }
+}
+
+@media only screen and (min-width: 900px) {
+    .sign-in {
+        width: 40vw;
     }
 }
